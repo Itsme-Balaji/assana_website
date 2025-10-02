@@ -75,7 +75,7 @@ const BandingofPiles = () => {
   
       },[])
 
-         if (loading || !bandingofPilesPageData) {
+         if (loading || !banner || !problems || !whyAssana) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
 
