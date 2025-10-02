@@ -11,7 +11,7 @@ const ColorectalSymptomsNeedToKnown = ({problems}) => {
             <div className='grid grid-cols-1   lg:grid-cols-3 lg:grid-rows-2 gap-y-10 lg:gap-y-30 bg-[] w-[95%] lg:w-[85%] m-auto mt-10 lg:mt-25'>
                <div className=' flex col-span-2 lg:col-span-1  justify-center lg:justify-start items-center bg-[] w-full order-1 lg:order-1'>
                     <div className='bg-[] flex justify-center relative h-90 sm:h-110 w-80 rounded-3xl' data-aos="fade-right" data-duration="1000">
-                        <img src={problems?.needToKnowImg1} className='h-full w-full rounded-3xl' alt='' />
+                        <img src={problems?.RectalBleeding_Image} className='h-full w-full rounded-3xl' alt='' />
                         <h1 className='text-2xl text-white font-bold absolute top-7 p-2 text-center flex'>Rectal Bleeding</h1>
                     </div>
                </div>
