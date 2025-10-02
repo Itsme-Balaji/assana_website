@@ -23,35 +23,65 @@ import ChatBot from '../components/ChatBot'
 const LaserSurgery = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [laserSurgeryPageData, setLaserSurgeryPageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+ const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/laserSurgeryPage/dataGet')
-            .then((response) => {
-                setLaserSurgeryPageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/laserSurgeryBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !laserSurgeryPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/laserSurgeryProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+          axios.get('https://assana-server.vercel.app/api/laserSurgeryWhyAssana/dataGet')
+          .then((response) => {
+              setWhyAssana(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+         if (loading || !banner || !problems || !whyAssana) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
   return (
     <>
      <Header />
-     <Banner pilesorhaemorrhoids={laserSurgeryPageData}/>
-     <LaserSurgeryNeedToKnow laserSurgeryPageData={laserSurgeryPageData}/>
-     <LaserSurgeryWhyAssana laserSurgeryPageData={laserSurgeryPageData}/>
+     <Banner banner={banner}/>
+     <LaserSurgeryNeedToKnow problems={problems}/>
+     <LaserSurgeryWhyAssana whyAssana={whyAssana}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
