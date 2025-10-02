@@ -71,7 +71,7 @@ const ColorectalSymptoms = () => {
       console.log("banner",banner);
       
 
-       if (loading || !banner || !problems || !whyAssana) {
+       if (loading || !banner ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
 
