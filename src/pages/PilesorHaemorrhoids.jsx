@@ -19,36 +19,52 @@ const PilesorHaemorrhoids = () => {
   console.log("pilesorhaemorrhoids",pilesorhaemorrhoids);
 
         const [chatBot, setChatBot] = useState(false);
+          const [banner, setBanner] = useState([]);
+          const [problems, setProblems] = useState([]);
 
-   const [pilesorHaemorrhoidsPageData, setPilesorHaemorrhoids] = useState([]);
+
                const [loading, setLoading] = useState(true);
    
     
         useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/pilesorHaemorrhoidsPage/dataGet')
-            .then((response) => {
-                setPilesorHaemorrhoids(response.data.data);
+          axios.get('https://assana-server.vercel.app/api/pilesorHaemorrhoidsBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !pilesorHaemorrhoidsPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/pilesorHaemorrhoidsProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+         if (loading || !banner || !problems) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
   
   return (
     <>
     <Header />
-     <Banner pilesorhaemorrhoids={pilesorHaemorrhoidsPageData}/>
-     <PilesNeedToKnow pilesorHaemorrhoidsPageData={pilesorHaemorrhoidsPageData}/>
+     <Banner banner={banner}/>
+     <PilesNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
