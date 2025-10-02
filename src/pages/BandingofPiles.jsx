@@ -25,25 +25,55 @@ import ChatBot from '../components/ChatBot'
 const BandingofPiles = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [bandingofPilesPageData, setBandingofPilesPageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/bandingofPilesPage/dataGet')
-            .then((response) => {
-                setBandingofPilesPageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/bandingofPilesBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
+
+
+          axios.get('https://assana-server.vercel.app/api/bandingofPilesProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+          axios.get('https://assana-server.vercel.app/api/bandingofPilesWhyAssana/dataGet')
+          .then((response) => {
+              setWhyAssana(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
 
          if (loading || !bandingofPilesPageData) {
     return <Spinner />;  // <-- Show spinner until data loads
@@ -53,9 +83,9 @@ const BandingofPiles = () => {
   return (
     <>
      <Header />
-     <Banner pilesorhaemorrhoids={bandingofPilesPageData}/>
-     <BandingofPilesNeedToKnow bandingofPilesPageData={bandingofPilesPageData}/>
-     <BandingofPilesWhyAssana bandingofPilesPageData={bandingofPilesPageData}/>
+     <Banner banner={banner}/>
+     <BandingofPilesNeedToKnow problems={problems}/>
+     <BandingofPilesWhyAssana whyAssana={whyAssana}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
