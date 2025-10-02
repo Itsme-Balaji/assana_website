@@ -1,0 +1,81 @@
+
+@import "tailwindcss";
+
+
+
+/* Hide scrollbar but allow scroll */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.arrow1Animation{
+  animation: moveArrow1 2s linear infinite;
+}
+
+.serviceBg{
+  background-image: url(./assets/images/service1.png);
+  background-repeat: no-repeat;
+  /* background-position; */
+  background-size: cover;
+}
+.trydemoBg{
+  background-image: url(./assets/images/try.png);
+  background-repeat: no-repeat;
+  background-position:center;
+  background-size: cover;
+}
+
+.smallShadow{
+  text-shadow: 1px 3px #00000030;
+}
+.textShadow{
+      text-shadow: 4px 5px #00000030;
+}
+.chatBotShadow{
+      box-shadow: 0px 0px 10px 0px #00000030;
+}
+/* .productBannerImg{
+   background-image: url(./assets/images/productBanner.jpg);
+  background-repeat: no-repeat;
+  background-position:center;
+  background-size: cover;
+} */
+
+
+@keyframes moveArrow1 {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(35px);
+    opacity: 0; /* fade out as it reaches bottom */
+  }
+  81% {
+    transform: translateY(0); 
+    opacity: 0; /* jump back to top but stay invisible */
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0; /* visible again at the top */
+  }
+}
+
+
+@media (min-width: 1024px) and (max-width: 1242px) {
+    .logoMedia{
+      height: 50px;
+      width: 75px;
+    }
+    .logoMediaImg{
+      height: 30px;
+    }
+    .mediaQuery {
+      font-size: 14px;
+    }
+  }
