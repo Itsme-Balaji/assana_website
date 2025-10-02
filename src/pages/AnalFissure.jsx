@@ -20,27 +20,43 @@ import ChatBot from '../components/ChatBot'
 const AnalFissure = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [analFissurePageData, setAnalFissurePageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/analFissurePage/dataGet')
-            .then((response) => {
-                setAnalFissurePageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/analFissureBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !analFissurePageData) {
+
+          axios.get('https://assana-server.vercel.app/api/analFissureProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+  
+      },[])
+         if (loading || !banner || !problems) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
 
@@ -48,8 +64,8 @@ const AnalFissure = () => {
   return (
     <>
     <Header />
-     <Banner pilesorhaemorrhoids={analFissurePageData}/>
-     <AnalFissureNeedToKnow analFissurePageData={analFissurePageData}/>
+     <Banner banner={banner}/>
+     <AnalFissureNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
