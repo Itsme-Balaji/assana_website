@@ -26,7 +26,7 @@ const ColorectalSymptoms = () => {
   
   
       useEffect(()=>{
-          axios.get('https://assana-doctorwebsite-backend.vercel.app/api/colorectalSymptomsBanner/dataGet')
+          axios.get('https://assana-server.vercel.app/api/colorectalSymptomsBanner/dataGet')
           .then((response) => {
               setBanner(response.data.data);
                     setLoading(false);
@@ -40,7 +40,7 @@ const ColorectalSymptoms = () => {
           });
 
 
-          axios.get('https://assana-doctorwebsite-backend.vercel.app/api/colorectalSymptomsProblems/dataGet')
+          axios.get('https://assana-server.vercel.app/api/colorectalSymptomsProblems/dataGet')
           .then((response) => {
               setProblems(response.data.data);
                     setLoading(false);
@@ -53,7 +53,7 @@ const ColorectalSymptoms = () => {
 
           });
 
-          axios.get('https://assana-doctorwebsite-backend.vercel.app/api/colorectalSymptomsWhyAssana/dataGet')
+          axios.get('https://assana-server.vercel.app/api/colorectalSymptomsWhyAssana/dataGet')
           .then((response) => {
               setWhyAssana(response.data.data);
                     setLoading(false);
