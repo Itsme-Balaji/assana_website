@@ -18,34 +18,55 @@ import ChatBot from '../components/ChatBot'
 const GutWellnwssPage = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [gutWellnwssPageData, setgutWellnwssPageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+   const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/gutWellnessPage/dataGet')
-            .then((response) => {
-                setgutWellnwssPageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/gutWellnessBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !gutWellnwssPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/gutWellnessProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
+
+
   return (
     <>
      <Header />
-     <PlevicFloorBanner plevicFloorProblem={gutWellnwssPageData}/>
-     <GutWellnwssNeedToKnow gutWellnwssPageData={gutWellnwssPageData} />
+     <PlevicFloorBanner banner={banner}/>
+     <GutWellnwssNeedToKnow problems={problems} />
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
