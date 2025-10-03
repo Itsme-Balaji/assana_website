@@ -25,33 +25,51 @@ import ChatBot from '../components/ChatBot'
 const AfterAnalSurgery = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [afterAnalSurgeryPageData, setAfterAnalSurgeryPageData] = useState([]);
-            const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/afterAnalSurgeryPage/dataGet')
-            .then((response) => {
-                setAfterAnalSurgeryPageData(response.data.data);
-            setLoading(false)
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/afterAnalSurgeryBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
+                    setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
-            setLoading(false)
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
 
-            });
-    
-        },[])
-            if (loading || !afterAnalSurgeryPageData) {
+          });
+
+
+          axios.get('https://assana-server.vercel.app/api/afterAnalSurgeryProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+  
+      },[])
+         if (loading || !banner || !problems) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
+
   return (
     <>
      <Header />
-     <Banner pilesorhaemorrhoids={afterAnalSurgeryPageData}/>
-     <AfterAnalSurgeryNeedToKnow afterAnalSurgeryPageData={afterAnalSurgeryPageData}/>
+     <Banner banner={banner}/>
+     <AfterAnalSurgeryNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
