@@ -21,35 +21,51 @@ import ChatBot from '../components/ChatBot'
 const AnalFistula = () => {
         const [chatBot, setChatBot] = useState(false);
 
-   const [analFistulaPageData, setAnalFistulaPageData] = useState([]);
-               const [loading, setLoading] = useState(true);
-   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/analFistulaPage/dataGet')
-            .then((response) => {
-                setAnalFistulaPageData(response.data.data);
+    const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/analFistulaBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !analFistulaPageData) {
-            return <Spinner />;  // <-- Show spinner until data loads
-          }
+
+          axios.get('https://assana-server.vercel.app/api/analFistulaProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+  
+      },[])
+         if (loading || !banner || !problems) {
+    return <Spinner />;  // <-- Show spinner until data loads
+  }
 
   return (
     <>
      <Header />
-     <PlevicFloorBanner plevicFloorProblem={analFistulaPageData}/>
-     <AnalFistulaNeedToKnow analFistulaPageData={analFistulaPageData}/>
+     <PlevicFloorBanner banner={banner}/>
+     <AnalFistulaNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
