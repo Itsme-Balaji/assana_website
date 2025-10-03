@@ -23,7 +23,7 @@ import BookNow from './pages/BookNow';
 import Products from './pages/Products';
 
 const App = () => {
-  return (
+  return (  
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />

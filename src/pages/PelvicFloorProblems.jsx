@@ -17,35 +17,69 @@ import ChatBot from '../components/ChatBot'
 const PelvicFloorProblems = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [pelvicFloorProblemsPageData, setpelvicFloorProblemsPageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/pelvicFloorPage/dataGet')
-            .then((response) => {
-                setpelvicFloorProblemsPageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/pelvicFloorBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !pelvicFloorProblemsPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/pelvicFloorProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+          axios.get('https://assana-server.vercel.app/api/pelvicFloorWhyAssana/dataGet')
+          .then((response) => {
+              setWhyAssana(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems || !whyAssana ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
+
   return (
     <>
      <Header />
-     <PlevicFloorBanner plevicFloorProblem={pelvicFloorProblemsPageData}/>
-     <PlevicFloorHelp pelvicFloorProblemsPageData={pelvicFloorProblemsPageData} />
-     <WhyAssanaPelvicFloor pelvicFloorProblemsPageData={pelvicFloorProblemsPageData}/>
+     <PlevicFloorBanner banner={banner}/>
+     <PlevicFloorHelp problems={problems} />
+     <WhyAssanaPelvicFloor whyAssana={whyAssana}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
