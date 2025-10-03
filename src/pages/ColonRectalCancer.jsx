@@ -23,27 +23,60 @@ const ColonRectalCancer = () => {
 
           const [chatBot, setChatBot] = useState(false);
   
-    const [colonRectalCancerPageData, setcolonRectalCancerPageData] = useState([]);
-                const [loading, setLoading] = useState(true);
-    
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/colonRectalCancerPage/dataGet')
-            .then((response) => {
-                setcolonRectalCancerPageData(response.data.data);
+    const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/colonRectalCancerBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !colonRectalCancerPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/colonRectalCancerProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+          axios.get('https://assana-server.vercel.app/api/colonRectalCancerWhyAssana/dataGet')
+          .then((response) => {
+              setWhyAssana(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems || !whyAssana ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
 
@@ -51,10 +84,10 @@ const ColonRectalCancer = () => {
   return (
     <>
     <Header />
-     <PlevicFloorBanner plevicFloorProblem={colonRectalCancerPageData}/>
-     <NeedToKnow colonRectalCancerPageData={colonRectalCancerPageData}/>
-     <Category colonRectalCancerPageData={colonRectalCancerPageData} />
-     <WhyAssana colonRectalCancerPageData={colonRectalCancerPageData}/>
+     <PlevicFloorBanner banner={banner}/>
+     <NeedToKnow problems={problems}/>
+     <Category problems={problems} />
+     <WhyAssana whyAssana={whyAssana}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
