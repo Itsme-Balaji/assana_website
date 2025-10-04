@@ -22,36 +22,70 @@ import ChatBot from '../components/ChatBot'
 const GutBrainAxis = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [gutBrainAxisPageData, setgutBrainAxisPageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+ const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/gutBrainAxisPage/dataGet')
-            .then((response) => {
-                setgutBrainAxisPageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/gutBrainAxisBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !gutBrainAxisPageData) {
+
+          axios.get('https://assana-server.vercel.app/api/gutBrainAxisProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+          axios.get('https://assana-server.vercel.app/api/gutBrainAxisWhyAssana/dataGet')
+          .then((response) => {
+              setWhyAssana(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems || !whyAssana ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
+
   return (
     <>
      <Header />
-     <PlevicFloorBanner plevicFloorProblem={gutBrainAxisPageData}/>
-     <GutBrainAxisNeddToKnow gutBrainAxisPageData={gutBrainAxisPageData}/>
-     <Services gutBrainAxisPageData={gutBrainAxisPageData}/>.
-     <WhyAssana gutBrainAxisPageData={gutBrainAxisPageData}/>
+     <PlevicFloorBanner banner={banner}/>
+     <GutBrainAxisNeddToKnow problems={problems}/>
+     <Services problems={problems}/>.
+     <WhyAssana whyAssana={whyAssana}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
