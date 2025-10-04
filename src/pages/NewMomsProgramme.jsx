@@ -27,7 +27,6 @@ const NewMomsProgramme = () => {
 
   const [banner, setBanner] = useState([]);
   const [problems, setProblems] = useState([]);
-  const [whyAssana, setWhyAssana] = useState([]);
 
   const [loading, setLoading] = useState(true);
   
