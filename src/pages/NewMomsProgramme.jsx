@@ -25,35 +25,57 @@ import ChatBot from '../components/ChatBot'
 const NewMomsProgramme = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [newMomsProgrammePageData, setnewMomsProgrammePageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+  const [whyAssana, setWhyAssana] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/newMomsPage/dataGet')
-            .then((response) => {
-                setnewMomsProgrammePageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/newMomsBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !newMomsProgrammePageData) {
+
+          axios.get('https://assana-server.vercel.app/api/newMomsProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
   
   return (
     <>
      <Header />
-     <Banner pilesorhaemorrhoids={newMomsProgrammePageData}/>
-     <NewMomsProgrammeNeedToKnow newMomsProgrammePageData={newMomsProgrammePageData}/>
+     <Banner banner={banner}/>
+     <NewMomsProgrammeNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
