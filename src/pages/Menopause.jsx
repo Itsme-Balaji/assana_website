@@ -21,36 +21,56 @@ import ChatBot from '../components/ChatBot'
 const Menopause = () => {
         const [chatBot, setChatBot] = useState(false);
 
-  const [menopausePageData, setmenopausePageData] = useState([]);
-              const [loading, setLoading] = useState(true);
+  const [banner, setBanner] = useState([]);
+  const [problems, setProblems] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   
-    
-        useEffect(()=>{
-            axios.get('https://assana-doctorwebsite-backend.vercel.app/api/menopausePage/dataGet')
-            .then((response) => {
-                setmenopausePageData(response.data.data);
+  
+      useEffect(()=>{
+          axios.get('https://assana-server.vercel.app/api/menopauseBanner/dataGet')
+          .then((response) => {
+              setBanner(response.data.data);
                     setLoading(false);
 
-    
-            })
-            .catch((error) => {
-            console.error("Error:", error);
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
                     setLoading(false);
 
-            });
-    
-        },[])
+          });
 
-         if (loading || !menopausePageData) {
+
+          axios.get('https://assana-server.vercel.app/api/menopauseProblems/dataGet')
+          .then((response) => {
+              setProblems(response.data.data);
+                    setLoading(false);
+
+  
+          })
+          .catch((error) => {
+          console.error("Error:", error);
+                    setLoading(false);
+
+          });
+
+
+  
+      },[])
+
+      console.log("banner",banner);
+      
+
+       if (loading || !banner || !problems ) {
     return <Spinner />;  // <-- Show spinner until data loads
   }
-
 
   return (
     <>
      <Header />
-     <PlevicFloorBanner plevicFloorProblem={menopausePageData}/>
-     <MenoPauseNeedToKnow menopausePageData={menopausePageData}/>
+     <PlevicFloorBanner banner={banner}/>
+     <MenoPauseNeedToKnow problems={problems}/>
      <PlevicAssanaTreat />
      <FrequentlyQA />
      <PlevicBooking />
